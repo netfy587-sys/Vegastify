@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Vegastify — The Complete Reading Guide to Fresh Vegetables</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+  --bg:#FAFCF6; --bg2:#EEF5E2; --ink:#16211A; --ink2:#4B5B50; --leaf:#1F7A4D; --lime:#C4EA55; --tom:#E8453C;
+  --plum:#2A1B3D; --card:#FFFFFF; --line:#D8E4C8;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){--bg:#0F1712;--bg2:#16231A;--ink:#EAF3E6;--ink2:#A8BCAB;--leaf:#5FD08F;--card:#1A2A1F;--line:#2A4030}
+}
+:root[data-theme="dark"]{--bg:#0F1712;--bg2:#16231A;--ink:#EAF3E6;--ink2:#A8BCAB;--leaf:#5FD08F;--card:#1A2A1F;--line:#2A4030}
+html{scroll-behavior:smooth;scroll-padding-top:calc(env(safe-area-inset-top,0px) + 76px)}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:'Newsreader',Georgia,serif;font-size:20px;line-height:1.75}
+h1,h2,h3,.ui{font-family:'Bricolage Grotesque',system-ui,sans-serif}
+h1,h2,h3{line-height:1.08;margin:0 0 .5em;letter-spacing:-.02em}
+h1{font-size:clamp(2.6rem,7.5vw,5.8rem);font-weight:800}
+h2{font-size:clamp(1.9rem,4.2vw,3.2rem);font-weight:800}
+h3{font-size:1.35rem;font-weight:700;margin-top:1.6em}
+p{margin:0 0 1.2em}
+.ui{font-size:.95rem}
+:focus-visible{outline:3px solid var(--tom);outline-offset:3px}
+#prog{position:fixed;top:0;left:0;height:4px;width:0;background:var(--tom);z-index:50}
+.wrap{max-width:1280px;margin:0 auto;padding:0 clamp(20px,5vw,60px)}
+nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--bg);border-bottom:1px solid var(--line)}
+nav .wrap{display:flex;align-items:center;justify-content:space-between;height:60px;gap:20px}
+nav b{font-family:'Bricolage Grotesque',sans-serif;font-size:1.5rem;font-weight:800;color:var(--leaf)}
+nav span{font-family:'Bricolage Grotesque',sans-serif;font-size:.9rem;color:var(--ink2)}
+/* hero */
+.hero{background:var(--plum);color:#F5F0FA;padding:clamp(48px,7vw,100px) 0 clamp(56px,8vw,110px);overflow:hidden}
+.hero .g{display:grid;grid-template-columns:1.1fr .9fr;gap:40px;align-items:center}
+.hero .kick{font-family:'Bricolage Grotesque',sans-serif;color:var(--lime);font-weight:700;font-size:1.3rem;margin-bottom:.8rem}
+.hero p.lead{font-size:1.35rem;color:#D9CDE8;max-width:34em}
+.hero .meta{display:flex;gap:22px;flex-wrap:wrap;margin-top:26px;color:#D9CDE8;font-family:'Bricolage Grotesque',sans-serif;font-size:.95rem}
+.hero svg{width:100%;height:auto;display:block}
+/* layout with TOC */
+.page{display:grid;grid-template-columns:260px minmax(0,1fr);gap:clamp(30px,5vw,80px);padding:clamp(48px,7vw,90px) 0}
+.toc{position:sticky;top:calc(env(safe-area-inset-top,0px) + 84px);align-self:start;font-family:'Bricolage Grotesque',sans-serif;font-size:.95rem;border-left:3px solid var(--line);padding-left:18px;max-height:calc(100vh - 110px);overflow:auto}
+.toc h4{margin:0 0 12px;font-size:1rem}
+.toc ol{list-style:none;margin:0;padding:0;display:grid;gap:9px}
+.toc a{text-decoration:none;color:var(--ink2)}
+.toc a:hover{color:var(--ink)}
+.toc a.on{color:var(--tom);font-weight:700}
+article.read{max-width:760px}
+article.read section{padding:0 0 clamp(56px,7vw,96px);margin-bottom:clamp(40px,5vw,72px);border-bottom:1px solid var(--line)}
+article.read section:last-of-type{border-bottom:0}
+.eyebrow{font-family:'Bricolage Grotesque',sans-serif;color:var(--leaf);font-weight:700;font-size:1rem;margin-bottom:.6rem}
+.lede{font-size:1.3rem;color:var(--ink2);line-height:1.6}
+.drop::first-letter{float:left;font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:4.6rem;line-height:.85;padding:6px 12px 0 0;color:var(--leaf)}
+blockquote{margin:2em 0;padding:6px 0 6px 26px;border-left:6px solid var(--tom);font-size:1.5rem;line-height:1.4;font-weight:500}
+figure{margin:2.2em 0}
+figure svg{width:100%;height:auto;border-radius:22px;display:block}
+figcaption{font-family:'Bricolage Grotesque',sans-serif;font-size:.88rem;color:var(--ink2);margin-top:10px}
+.note{background:var(--bg2);border-radius:18px;padding:22px 26px;margin:2em 0;border-left:6px solid var(--leaf)}
+.note b.ui{display:block;color:var(--leaf);margin-bottom:6px}
+.note p{margin:0}
+.note.warn{border-left-color:var(--tom)}
+.note.warn b.ui{color:var(--tom)}
+.tbl{overflow-x:auto;border:1px solid var(--line);border-radius:18px;background:var(--card);margin:2em 0}
+table{border-collapse:collapse;width:100%;min-width:600px;font-family:'DM Sans',sans-serif;font-size:.98rem;line-height:1.5}
+th,td{text-align:left;padding:14px 18px;border-bottom:1px solid var(--line);vertical-align:top}
+th{background:var(--bg2);font-family:'Bricolage Grotesque',sans-serif}
+tr:last-child td{border-bottom:0}
+ul.plain,ol.plain{padding-left:1.3em;margin:0 0 1.2em}
+ul.plain li,ol.plain li{margin-bottom:.5em}
+.cards{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;margin:2em 0}
+.cards div{background:var(--card);border:1px solid var(--line);border-radius:20px;overflow:hidden}
+.cards svg{width:100%;height:120px;display:block}
+.cards .b{padding:16px 20px 20px;font-family:'DM Sans',sans-serif;font-size:.98rem;line-height:1.55}
+.cards h3{margin:0 0 .3em;font-size:1.15rem}
+.cards p{margin:0;color:var(--ink2)}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:2em 0;font-family:'DM Sans',sans-serif}
+.stats div{border-top:4px solid var(--tom);padding-top:10px}
+.stats b{display:block;font-family:'Bricolage Grotesque',sans-serif;font-size:1.5rem}
+.stats span{color:var(--ink2);font-size:.95rem;line-height:1.4;display:block}
+.steps{list-style:none;counter-reset:s;padding:0;margin:1.6em 0}
+.steps li{counter-increment:s;position:relative;padding:0 0 22px 64px}
+.steps li::before{content:counter(s);position:absolute;left:0;top:0;width:44px;height:44px;border-radius:50%;background:var(--leaf);color:var(--bg);font-family:'Bricolage Grotesque',sans-serif;font-weight:800;display:grid;place-items:center}
+.steps li b{font-family:'Bricolage Grotesque',sans-serif;display:block;font-size:1.15rem}
+details{border-bottom:1px solid var(--line);padding:18px 0}
+details:first-of-type{border-top:1px solid var(--line)}
+summary{cursor:pointer;font-family:'Bricolage Grotesque',sans-serif;font-size:1.25rem;font-weight:700;list-style:none;display:flex;justify-content:space-between;gap:16px}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";color:var(--tom);font-size:1.6rem;line-height:1}
+details[open] summary::after{content:"–"}
+details p{margin:.8em 0 0;color:var(--ink2)}
+dl{margin:1.5em 0}
+dt{font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:1.1rem;margin-top:1.1em}
+dd{margin:.15em 0 0;color:var(--ink2)}
+/* closing */
+.closing{background:var(--plum);color:#F5F0FA;padding:clamp(60px,9vw,120px) 0}
+.closing h2{font-size:clamp(2.2rem,6vw,4.6rem)}
+.closing p{max-width:40em;color:#D9CDE8;font-size:1.25rem}
+.closing ul{max-width:44em;padding-left:1.2em;color:#E9E1F3}
+.closing li{margin-bottom:.6em}
+footer{background:#120B1C;color:#B9AECB;padding:40px 0 56px;font-family:'DM Sans',sans-serif;font-size:.92rem}
+footer b{color:#fff;font-family:'Bricolage Grotesque',sans-serif;font-size:1.4rem}
+footer p{max-width:80ch;margin:.5em 0 0}
+@media (max-width:980px){
+  .hero .g{grid-template-columns:1fr}
+  .page{grid-template-columns:1fr}
+  .toc{position:static;max-height:none;border:1px solid var(--line);border-radius:16px;padding:18px 22px}
+  .toc ol{grid-template-columns:1fr 1fr}
+}
+@media (max-width:560px){body{font-size:18px}.cards,.stats,.toc ol{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div id="prog" aria-hidden="true"></div>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <linearGradient id="tomG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#F26B5B"/><stop offset="1" stop-color="#C92E25"/></linearGradient>
+    <linearGradient id="carG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFA24D"/><stop offset="1" stop-color="#E06B0E"/></linearGradient>
+    <linearGradient id="grnG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#6BC46F"/><stop offset="1" stop-color="#2C8A45"/></linearGradient>
+    <linearGradient id="purG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#9A5FC9"/><stop offset="1" stop-color="#5A2A8A"/></linearGradient>
+    <linearGradient id="yelG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFE066"/><stop offset="1" stop-color="#E5B012"/></linearGradient>
+  </defs>
+</svg>
+
+<nav>
+  <div class="wrap">
+    <b>Vegastify</b>
+    <span>The complete reading guide · about 20 minutes</span>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap g">
+    <div>
+      <p class="kick">Click. Discover. Enjoy.</p>
+      <h1>Vegastify: a plain, careful guide to fresh vegetables.</h1>
+      <p class="lead">Discover the perfect blend of quality and value. Vegastify is a reading guide that explains how to choose, store, prepare and understand vegetables, in clear language and without hype.</p>
+      <div class="meta"><span>Ten short chapters</span><span>Tables, diagrams and a glossary</span><span>Read in order or jump around</span></div>
+    </div>
+    <svg viewBox="0 0 520 480" role="img" aria-label="Illustration of an open book with tomato, carrot, broccoli and eggplant around it, representing the Vegastify reading guide">
+      <circle cx="260" cy="250" r="215" fill="#3A2755"/>
+      <circle cx="260" cy="250" r="160" fill="#47306A"/>
+      <path d="M260 160 Q190 140 110 158 V350 Q190 332 260 356Z" fill="#FAFCF6"/>
+      <path d="M260 160 Q330 140 410 158 V350 Q330 332 260 356Z" fill="#EEF5E2"/>
+      <path d="M260 160 V356" stroke="#C4EA55" stroke-width="4"/>
+      <g stroke="#B4C8A0" stroke-width="5" stroke-linecap="round"><path d="M132 190 Q190 178 240 192M132 214 Q190 202 240 216M132 238 Q190 226 240 240M132 262 Q190 250 240 264"/><path d="M280 192 Q330 178 388 190M280 216 Q330 202 388 214"/></g>
+      <circle cx="334" cy="270" r="30" fill="url(#tomG)"/><path d="M320 242 q14-12 28 0 q-10 8-14 5 q-4 3-14-5Z" fill="#2C8A45"/>
+      <g transform="translate(75 120)"><circle cx="0" cy="0" r="46" fill="url(#tomG)"/><path d="M-14 -40 q14 -14 28 0 q-10 8 -14 4 q-4 4 -14 -4Z" fill="#2C8A45"/></g>
+      <g transform="translate(440 150) rotate(30)"><path d="M0 -10 L76 0 L0 22 Q-14 8 0 -10Z" fill="url(#carG)"/><path d="M-4 0c-12-14-6-28 6-34M-4 0c8-18 22-22 34-16" stroke="#2C8A45" stroke-width="7" fill="none" stroke-linecap="round"/></g>
+      <g transform="translate(80 390)"><rect x="-10" y="4" width="20" height="50" rx="8" fill="#8FD18F"/><circle cx="-20" cy="-8" r="26" fill="url(#grnG)"/><circle cx="8" cy="-24" r="28" fill="url(#grnG)"/><circle cx="30" cy="-2" r="24" fill="url(#grnG)"/></g>
+      <g transform="translate(440 390) rotate(-25)"><ellipse cx="0" cy="0" rx="30" ry="52" fill="url(#purG)"/><path d="M-10 -50 q10 -20 20 0Z" fill="#2C8A45"/></g>
+    </svg>
+  </div>
+</header>
+
+<div class="wrap page">
+
+  <aside class="toc" aria-label="Table of contents">
+    <h4>In this Vegastify guide</h4>
+    <ol>
+      <li><a href="#c1">1. What Vegastify covers</a></li>
+      <li><a href="#c2">2. Choosing well</a></li>
+      <li><a href="#c3">3. Seasons and colors</a></li>
+      <li><a href="#c4">4. Safe &amp; Secure handling</a></li>
+      <li><a href="#c5">5. Freshness and quality</a></li>
+      <li><a href="#c6">6. Storage guide</a></li>
+      <li><a href="#c7">7. Cooking methods</a></li>
+      <li><a href="#c8">8. How this guide is written</a></li>
+      <li><a href="#c9">9. Questions and glossary</a></li>
+      <li><a href="#c10">10. Summary</a></li>
+    </ol>
+  </aside>
+
+  <article class="read">
+
+    <section id="c1">
+      <p class="eyebrow">Chapter 1</p>
+      <h2>Discover the perfect blend of quality and value.</h2>
+      <p class="lede">Vegastify exists to make one everyday decision easier: which vegetables to pick, and what to do with them once they are home.</p>
+      <p class="drop">Vegetables are among the most useful foods in any kitchen, yet most of us choose them by habit. We buy the same bag of carrots, the same tomatoes, the same greens. This Vegastify guide slows that habit down a little. It explains what to look for, how seasons shape flavor and price, and how storage and cooking change what ends up on the plate.</p>
+      <p>The guide is written to be read, not skimmed for a deal. Every chapter of Vegastify stands on its own, and the chapters are short enough to finish in one sitting. You will find tables to compare options, diagrams to make the ideas concrete, and a glossary at the end for any unfamiliar term.</p>
+      <blockquote>Good produce is a blend of three things: how it was grown, how it was handled, and how you use it.</blockquote>
+      <div class="stats">
+        <div><b>400 g</b><span>A daily amount of fruit and vegetables commonly recommended by the World Health Organization (about five portions).</span></div>
+        <div><b>4 seasons</b><span>Each brings its own vegetables, flavors and typical price patterns.</span></div>
+        <div><b>5 colors</b><span>Red, orange, green, purple and white each bring different plant compounds.</span></div>
+      </div>
+      <figure>
+        <svg viewBox="0 0 700 260" role="img" aria-label="Diagram of the Vegastify guide flow: choose, handle, store, cook">
+          <rect width="700" height="260" fill="#1F7A4D"/>
+          <g font-family="Bricolage Grotesque, sans-serif" fill="#fff" font-size="20" font-weight="700" text-anchor="middle">
+            <rect x="30" y="80" width="140" height="100" rx="20" fill="#C4EA55"/><text x="100" y="138" fill="#16211A">Choose</text>
+            <rect x="200" y="80" width="140" height="100" rx="20" fill="#FFFFFF"/><text x="270" y="138" fill="#16211A">Handle</text>
+            <rect x="370" y="80" width="140" height="100" rx="20" fill="#FFE066"/><text x="440" y="138" fill="#16211A">Store</text>
+            <rect x="540" y="80" width="140" height="100" rx="20" fill="#F26B5B"/><text x="610" y="138">Cook</text>
+          </g>
+          <g stroke="#fff" stroke-width="4" stroke-linecap="round" fill="none"><path d="M172 130 h24M342 130 h24M512 130 h24"/></g>
+          <text x="350" y="230" text-anchor="middle" fill="#fff" font-family="DM Sans, sans-serif" font-size="15">The four stages Vegastify follows from market to plate</text>
+        </svg>
+        <figcaption>Figure 1. The path every vegetable takes, and the four parts of this Vegastify guide.</figcaption>
+      </figure>
+    </section>
+
+    <section id="c2">
+      <p class="eyebrow">Chapter 2</p>
+      <h2>Make the Smart Choice Today.</h2>
+      <p class="lede">A smart choice at the market is usually a simple one: pick what is in season, look closely, and buy what you will actually eat.</p>
+      <p>The best way to decide is with a short checklist. Vegastify suggests running through these four questions before you put anything in the basket.</p>
+      <ol class="steps">
+        <li><b>Is it in season where you live?</b>Seasonal vegetables are usually fresher, tastier and often cheaper because they travel less and are grown in their natural window.</li>
+        <li><b>Does it look and feel right?</b>Good produce feels heavy for its size, has firm skin and bright color, and shows no mold, deep bruising or slime.</li>
+        <li><b>Will you use it in time?</b>A vegetable you throw away is never good value. Buy for the next few days, not an imagined ideal week.</li>
+        <li><b>Do you know what you will cook?</b>A rough plan, even just "roast" or "soup", stops you buying more than you can use.</li>
+      </ol>
+      <div class="note">
+        <b class="ui">Reading tip from Vegastify</b>
+        <p>If you are unsure between two options, choose the one that smells like the vegetable it is. Tomatoes should smell of tomato, herbs of their leaves, and onions should have little smell at all until cut.</p>
+      </div>
+      <h3>Whole versus packed, fresh versus frozen</h3>
+      <p>Fresh is not always better than frozen. Vegetables destined for the freezer are usually picked ripe and frozen within hours, which locks in much of their nutrient content. Tinned vegetables are also a valid option when fresh ones are out of season, provided you check the salt and sugar on the label.</p>
+      <div class="tbl">
+        <table>
+          <thead><tr><th>Form</th><th>Strengths</th><th>Watch for</th></tr></thead>
+          <tbody>
+            <tr><td>Fresh</td><td>Best flavor and texture when in season</td><td>Spoils within days if stored poorly</td></tr>
+            <tr><td>Frozen</td><td>Long life, picked ripe, little waste</td><td>Freezer burn, ice crystals on old bags</td></tr>
+            <tr><td>Tinned</td><td>Shelf-stable, convenient, low cost</td><td>Added salt or sugar in some brines</td></tr>
+            <tr><td>Dried</td><td>Concentrated flavor, light to carry</td><td>Long soaking or cooking times</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section id="c3">
+      <p class="eyebrow">Chapter 3</p>
+      <h2>Seasons and colors on the Vegastify calendar.</h2>
+      <p class="lede">Two simple ideas, seasonality and color, explain most of what you need to know about variety.</p>
+      <h3>The seasonal calendar</h3>
+      <p>The table below lists common vegetables by season for the Northern Hemisphere. In the Southern Hemisphere, including Australia, the seasons are reversed, so summer vegetables appear around December to February.</p>
+      <div class="tbl">
+        <table>
+          <thead><tr><th>Season (north)</th><th>Typical vegetables</th><th>Good for</th></tr></thead>
+          <tbody>
+            <tr><td>Spring</td><td>Asparagus, peas, radishes, spinach, spring onions</td><td>Light salads, quick steaming</td></tr>
+            <tr><td>Summer</td><td>Tomatoes, zucchini, corn, peppers, cucumbers</td><td>Raw dishes, grilling</td></tr>
+            <tr><td>Autumn</td><td>Pumpkin, squash, beets, broccoli, cauliflower</td><td>Roasting, soups</td></tr>
+            <tr><td>Winter</td><td>Kale, cabbage, carrots, leeks, parsnips</td><td>Stews, slow cooking</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <h3>Eating by color</h3>
+      <p>Vegetable colors come from natural plant compounds. Eating a mix across the week is a simple way to widen the range of nutrients in your diet. It is a rule of thumb, not a strict formula.</p>
+      <div class="cards">
+        <div>
+          <svg viewBox="0 0 300 120"><rect width="300" height="120" fill="#FFE6E2"/><circle cx="110" cy="66" r="34" fill="url(#tomG)"/><path d="M96 36 q14-12 28 0 q-10 8-14 5 q-4 3-14-5Z" fill="#2C8A45"/><circle cx="190" cy="76" r="24" fill="url(#tomG)"/></svg>
+          <div class="b"><h3>Red</h3><p>Tomatoes and red peppers. Rich in lycopene, which the body absorbs better when the food is cooked with a little oil.</p></div>
+        </div>
+        <div>
+          <svg viewBox="0 0 300 120"><rect width="300" height="120" fill="#FFEBD6"/><path d="M80 78 L210 52 L226 78 L98 108Z" fill="url(#carG)"/><path d="M70 72c-12-14-8-28 4-34" stroke="#2C8A45" stroke-width="8" fill="none" stroke-linecap="round"/></svg>
+          <div class="b"><h3>Orange</h3><p>Carrots, pumpkin and sweet potato. Their color comes from beta-carotene, which the body can turn into vitamin A.</p></div>
+        </div>
+        <div>
+          <svg viewBox="0 0 300 120"><rect width="300" height="120" fill="#DDF1DA"/><g transform="translate(150 72)"><rect x="-8" y="8" width="16" height="36" rx="7" fill="#8FD18F"/><circle cx="-22" cy="0" r="22" fill="url(#grnG)"/><circle cx="6" cy="-16" r="24" fill="url(#grnG)"/><circle cx="30" cy="4" r="20" fill="url(#grnG)"/></g></svg>
+          <div class="b"><h3>Green</h3><p>Broccoli, spinach and beans. Good sources of folate, vitamin K and fiber.</p></div>
+        </div>
+        <div>
+          <svg viewBox="0 0 300 120"><rect width="300" height="120" fill="#EFE4FA"/><ellipse cx="140" cy="66" rx="28" ry="42" fill="url(#purG)" transform="rotate(20 140 66)"/><ellipse cx="210" cy="84" rx="18" ry="24" fill="url(#yelG)"/></svg>
+          <div class="b"><h3>Purple and white</h3><p>Eggplant and red cabbage bring anthocyanins. Onions, garlic and cauliflower add fiber and sulfur compounds.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="c4">
+      <p class="eyebrow">Chapter 4</p>
+      <h2>Safe &amp; Secure: handling vegetables properly.</h2>
+      <p class="lede">Food safety at home is mostly about a few habits: clean hands, clean surfaces, and the right temperature.</p>
+      <p>Vegetables can carry soil, and sometimes bacteria, from the field or from handling. Nearly all of this is easy to manage in a home kitchen. The Vegastify checklist below covers the essentials.</p>
+      <ol class="steps">
+        <li><b>Wash your hands</b>Use soap and warm water for about 20 seconds before you handle food.</li>
+        <li><b>Rinse produce under running water</b>Rub firm items such as carrots or potatoes with your hands or a clean brush. Dry with a clean cloth or paper towel.</li>
+        <li><b>Keep raw meat away</b>Use separate boards and knives for meat and for vegetables that will be eaten raw.</li>
+        <li><b>Refrigerate cut produce</b>Keep your fridge at or below 5 °C (41 °F) and store cut vegetables in a covered container.</li>
+        <li><b>Discard what has spoiled</b>Slimy leaves, mold or a sour smell mean the item should be thrown away.</li>
+      </ol>
+      <figure>
+        <svg viewBox="0 0 700 300" role="img" aria-label="Diagram of a shield and checkmark next to hands, water, board and fridge symbols">
+          <rect width="700" height="300" fill="#16321F"/>
+          <path d="M120 50 L200 80 V150 C200 196 168 232 120 252 C72 232 40 196 40 150 V80Z" fill="#C4EA55"/>
+          <path d="M84 150 L112 178 L160 114" stroke="#16211A" stroke-width="14" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+          <g font-family="DM Sans, sans-serif" font-size="15" fill="#E9F5E1" text-anchor="middle">
+            <circle cx="300" cy="130" r="38" fill="#2A5A3A"/><path d="M285 140 q15 -40 30 0 q-15 14 -30 0Z" fill="#7FD0F4"/><text x="300" y="200">Wash</text>
+            <circle cx="410" cy="130" r="38" fill="#2A5A3A"/><rect x="386" y="118" width="48" height="24" rx="4" fill="#F1F5E9"/><text x="410" y="200">Separate</text>
+            <circle cx="520" cy="130" r="38" fill="#2A5A3A"/><rect x="504" y="100" width="32" height="60" rx="6" fill="#E9F5E1"/><path d="M504 126 h32" stroke="#2A5A3A" stroke-width="3"/><text x="520" y="200">Chill</text>
+            <circle cx="630" cy="130" r="38" fill="#2A5A3A"/><circle cx="630" cy="130" r="18" fill="none" stroke="#E9F5E1" stroke-width="4"/><path d="M630 118 v12 l9 6" stroke="#E9F5E1" stroke-width="3" fill="none" stroke-linecap="round"/><text x="630" y="200">Check time</text>
+          </g>
+          <text x="350" y="275" text-anchor="middle" fill="#B8D8B0" font-family="DM Sans, sans-serif" font-size="14">Four habits that cover most home food safety</text>
+        </svg>
+        <figcaption>Figure 2. Safe handling in four steps, as summarized by Vegastify.</figcaption>
+      </figure>
+      <div class="note warn">
+        <b class="ui">Important</b>
+        <p>Pre-cut and bagged salads should be kept cold and eaten before the date on the pack. People who are pregnant, elderly or have weakened immunity should follow local health guidance about raw sprouts and unwashed produce.</p>
+      </div>
+    </section>
+
+    <section id="c5">
+      <p class="eyebrow">Chapter 5</p>
+      <h2>Experience Quality That Speaks for Itself.</h2>
+      <p class="lede">Quality in vegetables is visible and easy to learn. Your eyes, nose and hands will tell you most of what you need to know.</p>
+      <p>Built with care, made for you: that is the idea behind this Vegastify chapter. It puts the signs of quality into a single table so that you can check them quickly at any market or shelf.</p>
+      <div class="tbl">
+        <table>
+          <thead><tr><th>Vegetable</th><th>Good signs</th><th>Warning signs</th></tr></thead>
+          <tbody>
+            <tr><td>Tomatoes</td><td>Deep color, slight give, fragrant stem end</td><td>Wrinkled skin, wet spots, mold near the stem</td></tr>
+            <tr><td>Leafy greens</td><td>Crisp, bright, uniform color</td><td>Yellowing, slime, limp stems</td></tr>
+            <tr><td>Carrots</td><td>Firm, smooth, snap when bent</td><td>Rubbery bend, white fuzz, black tips</td></tr>
+            <tr><td>Broccoli</td><td>Tight green florets, firm stalk</td><td>Yellow buds, dry cut end, soft stem</td></tr>
+            <tr><td>Peppers</td><td>Glossy, heavy, firm walls</td><td>Wrinkles, soft patches, dull skin</td></tr>
+            <tr><td>Onions</td><td>Dry papery skin, firm neck</td><td>Soft spots, sprouting, damp smell</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <blockquote>Quality is not one thing. It is freshness, ripeness and handling adding up.</blockquote>
+      <p>Cosmetic differences do not always mean poor quality. Slightly misshapen or scarred vegetables often taste the same as perfect-looking ones, and choosing them can reduce food waste. Vegastify treats shape as unimportant and freshness as essential.</p>
+    </section>
+
+    <section id="c6">
+      <p class="eyebrow">Chapter 6</p>
+      <h2>The Vegastify storage guide.</h2>
+      <p class="lede">Where a vegetable lives after you buy it decides how long it lasts.</p>
+      <p>Different vegetables want different conditions. Some need the cold of a fridge. Others lose flavor there and prefer a cool cupboard. A few give off ethylene, a natural ripening gas, and should be kept apart from sensitive produce.</p>
+      <div class="tbl">
+        <table>
+          <thead><tr><th>Where</th><th>Vegetables</th><th>Notes</th></tr></thead>
+          <tbody>
+            <tr><td>Fridge crisper</td><td>Leafy greens, broccoli, carrots, celery, cucumbers*</td><td>Wrap greens in a slightly damp cloth. *Cucumbers can chill-damage below about 10 °C.</td></tr>
+            <tr><td>Counter</td><td>Tomatoes, avocados, ripening fruit</td><td>Cold dulls tomato flavor and texture.</td></tr>
+            <tr><td>Cool, dark cupboard</td><td>Potatoes, onions, garlic, pumpkin</td><td>Keep onions and potatoes in separate spaces.</td></tr>
+            <tr><td>Freezer</td><td>Peas, beans, blanched broccoli, corn</td><td>Blanch briefly, cool, dry, then freeze flat.</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <figure>
+        <svg viewBox="0 0 700 300" role="img" aria-label="Simple diagram showing three storage zones: fridge, counter and cool cupboard">
+          <rect width="700" height="300" fill="#EEF5E2"/>
+          <g font-family="Bricolage Grotesque, sans-serif" font-size="18" font-weight="700" text-anchor="middle" fill="#16211A">
+            <rect x="40" y="40" width="180" height="200" rx="20" fill="#CFE5F5"/><rect x="40" y="130" width="180" height="6" fill="#9FC4E0"/><circle cx="90" cy="180" r="18" fill="url(#grnG)"/><circle cx="130" cy="176" r="14" fill="url(#carG)"/><text x="130" y="272">Fridge</text>
+            <rect x="260" y="60" width="180" height="180" rx="20" fill="#FFF0C9"/><circle cx="330" cy="180" r="24" fill="url(#tomG)"/><ellipse cx="392" cy="188" rx="16" ry="20" fill="url(#yelG)"/><text x="350" y="272">Counter</text>
+            <rect x="480" y="40" width="180" height="200" rx="20" fill="#E3D5C0"/><ellipse cx="540" cy="190" rx="26" ry="22" fill="#C79A5B"/><ellipse cx="600" cy="192" rx="22" ry="20" fill="#E5B012"/><text x="570" y="272">Cool cupboard</text>
+          </g>
+        </svg>
+        <figcaption>Figure 3. Three common storage zones in the Vegastify guide.</figcaption>
+      </figure>
+      <h3>Why ethylene matters</h3>
+      <p>Apples, bananas and ripe tomatoes give off ethylene. Kept next to leafy greens or broccoli, they can speed up yellowing. A simple fix is to give ethylene producers their own bowl and keep sensitive vegetables in the fridge.</p>
+    </section>
+
+    <section id="c7">
+      <p class="eyebrow">Chapter 7</p>
+      <h2>Turn Everyday Into Something Extraordinary.</h2>
+      <p class="lede">Cooking method changes texture, taste and nutrient content. A few techniques are enough to make ordinary vegetables interesting.</p>
+      <div class="tbl">
+        <table>
+          <thead><tr><th>Method</th><th>What happens</th><th>Best for</th></tr></thead>
+          <tbody>
+            <tr><td>Steaming</td><td>Gentle heat keeps color, crunch and water-soluble vitamins</td><td>Broccoli, beans, carrots</td></tr>
+            <tr><td>Roasting</td><td>Dry heat browns sugars and deepens flavor</td><td>Roots, squash, cauliflower</td></tr>
+            <tr><td>Sautéing</td><td>Quick, high heat with a little oil</td><td>Peppers, zucchini, greens</td></tr>
+            <tr><td>Boiling</td><td>Softens fibers, but some vitamins move into the water</td><td>Potatoes, beets, soup bases</td></tr>
+            <tr><td>Raw</td><td>Keeps all heat-sensitive nutrients and full crunch</td><td>Cucumbers, radishes, tomatoes</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <h3>Three everyday ideas</h3>
+      <ul class="plain">
+        <li><b>A weeknight tray bake.</b> Chop carrots, peppers and onions, toss in oil and roast at a high heat for about 25 minutes. Vegastify recommends turning the tray halfway through for even browning.</li>
+        <li><b>A raw color bowl.</b> Shred cabbage, carrot and cucumber, then dress with lemon and a little oil. Different colors make the bowl more interesting and more varied nutritionally.</li>
+        <li><b>A batch of soup.</b> Simmer onions, carrots and any soft vegetables in stock, then blend. It uses up vegetables that are close to the end of their life.</li>
+      </ul>
+      <div class="note">
+        <b class="ui">Cooking note</b>
+        <p>Fat-soluble vitamins (A, D, E and K) and compounds like lycopene are absorbed better with a little fat. A drizzle of olive oil on cooked tomatoes or carrots does more than add flavor.</p>
+      </div>
+    </section>
+
+    <section id="c8">
+      <p class="eyebrow">Chapter 8</p>
+      <h2>Trusted by Thousands. Loved by Many.</h2>
+      <p class="lede">This heading names an aim. The Vegastify guide tries to earn trust by being accurate, plain and consistent.</p>
+      <p>Trust is built by how a guide is written, not by what it says about itself. Vegastify follows a few editorial habits, listed below, so that you can judge for yourself whether it deserves a place on your bookmarks bar.</p>
+      <ul class="plain">
+        <li><b>Plain language.</b> No jargon where a simple word works, and every technical term is explained in the glossary.</li>
+        <li><b>No exaggeration.</b> Vegastify does not describe any vegetable as a miracle, a superfood cure or a diet solution.</li>
+        <li><b>Honest limits.</b> Where evidence is mixed or advice depends on local conditions, the guide says so.</li>
+        <li><b>General guidance only.</b> Nothing in Vegastify replaces advice from a doctor or dietitian.</li>
+      </ul>
+      <p>If you find something unclear or out of date, treat it as a fault in the guide, not in your understanding, and check with a reliable local source such as your national health or food-safety agency.</p>
+    </section>
+
+    <section id="c9">
+      <p class="eyebrow">Chapter 9</p>
+      <h2>Everything you need to know before you go.</h2>
+      <p class="lede">Short answers to the questions readers ask most often, followed by a glossary.</p>
+      <details>
+        <summary>What is Vegastify?</summary>
+        <p>Vegastify is this reading guide: a free-to-read, plain-language explanation of choosing, handling, storing and cooking fresh vegetables.</p>
+      </details>
+      <details>
+        <summary>Should I wash vegetables before storing them?</summary>
+        <p>Usually no. Extra moisture speeds spoilage. Wash most vegetables just before you use them, and dry leafy greens well if you wash them in advance.</p>
+      </details>
+      <details>
+        <summary>Are organic vegetables safer or more nutritious?</summary>
+        <p>Organic farming follows different rules on pesticides and fertilizers, but current evidence does not show large, consistent nutrient differences. Eating more vegetables, organic or not, matters more than the label.</p>
+      </details>
+      <details>
+        <summary>Is it worth buying frozen vegetables?</summary>
+        <p>Yes. They are convenient, reduce waste and retain most nutrients. Vegastify treats frozen vegetables as a practical option, especially out of season.</p>
+      </details>
+      <details>
+        <summary>How can I reduce vegetable waste?</summary>
+        <p>Plan meals, buy smaller amounts more often, store correctly, and use offcuts for stock. Wilting greens can go into soups, and soft tomatoes into sauce.</p>
+      </details>
+      <details>
+        <summary>How long do vegetables last in the fridge?</summary>
+        <p>It varies. Leafy greens often last 3 to 7 days, broccoli and carrots one to two weeks, and cabbage even longer if stored whole. Always check for signs of spoilage.</p>
+      </details>
+      <h3>Glossary</h3>
+      <dl>
+        <dt>Anthocyanins</dt><dd>Purple and red plant pigments found in eggplant, red cabbage and berries.</dd>
+        <dt>Beta-carotene</dt><dd>An orange pigment that the body can convert into vitamin A.</dd>
+        <dt>Blanching</dt><dd>Briefly boiling a vegetable, then cooling it quickly in cold water, usually before freezing.</dd>
+        <dt>Ethylene</dt><dd>A natural gas released by some produce that speeds ripening in nearby items.</dd>
+        <dt>Lycopene</dt><dd>A red pigment found in tomatoes, better absorbed when cooked with fat.</dd>
+        <dt>Seasonal produce</dt><dd>Vegetables harvested during their natural growing window in your region.</dd>
+      </dl>
+    </section>
+
+    <section id="c10">
+      <p class="eyebrow">Chapter 10</p>
+      <h2>Your Next Big Upgrade Awaits: what to remember.</h2>
+      <p class="lede">The whole Vegastify guide in one page.</p>
+      <ol class="plain">
+        <li>Choose by season, feel and smell rather than by habit.</li>
+        <li>Frozen and tinned vegetables are perfectly good options.</li>
+        <li>Wash hands and produce, separate raw meat, and keep the fridge cold.</li>
+        <li>Store vegetables where they are happiest, and keep ethylene producers apart.</li>
+        <li>Eat a range of colors across the week.</li>
+        <li>Vary cooking methods to change taste and texture.</li>
+      </ol>
+      <p>Every small habit adds up. Better choosing, careful storage and thoughtful cooking are the simple changes that make vegetables easier to enjoy.</p>
+    </section>
+
+  </article>
+</div>
+
+<div class="closing">
+  <div class="wrap">
+    <h2>Click. Discover. Enjoy.</h2>
+    <p>You have reached the end of the Vegastify guide. Come back to any chapter whenever you want a reminder, and use the table of contents to jump straight to it.</p>
+    <ul>
+      <li>Vegastify chapters are written to be read in any order.</li>
+      <li>All tables, figures and diagrams are original to this guide.</li>
+      <li>Vegastify offers general information only, not medical advice.</li>
+    </ul>
+  </div>
+</div>
+
+<footer>
+  <div class="wrap">
+    <b>Vegastify</b>
+    <p>An independent reading guide to fresh vegetables. Safe &amp; Secure handling advice is general and follows widely published food-safety guidance. Built with care, made for you. Illustrations are original drawings made for this page.</p>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var bar=document.getElementById('prog');
+  function onScroll(){
+    var h=document.documentElement;
+    var max=(h.scrollHeight-h.clientHeight)||1;
+    bar.style.width=Math.min(100,(h.scrollTop/max)*100)+'%';
+  }
+  window.addEventListener('scroll',onScroll,{passive:true});onScroll();
+  var links=[].slice.call(document.querySelectorAll('.toc a'));
+  var map={};links.forEach(function(a){map[a.getAttribute('href').slice(1)]=a});
+  if('IntersectionObserver' in window){
+    var io=new IntersectionObserver(function(es){
+      es.forEach(function(e){
+        if(e.isIntersecting){links.forEach(function(a){a.classList.remove('on')});var a=map[e.target.id];if(a)a.classList.add('on')}
+      });
+    },{rootMargin:'-20% 0px -70% 0px'});
+    document.querySelectorAll('article.read section').forEach(function(s){io.observe(s)});
+  }
+})();
+</script>
+</body>
+</html>
